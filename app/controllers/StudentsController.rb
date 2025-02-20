@@ -14,7 +14,7 @@ class StudentsController < ApplicationController
 
   def create
     @student = Student.new
-    @student.first_name = params.fetch("query_first_name")
+    @student.first_name = params.fetch("query_name")
     @student.last_name = params.fetch("query_last_name")
     @student.email = params.fetch("query_email")
 
@@ -44,9 +44,10 @@ class StudentsController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    @student = Student.where({ :id => the_id }).at(0)
+    matching_records = Student.where({ :id => the_id })
+    the_student = matching_records.at(0)
 
-    @student.destroy
+    the_student.destroy
 
     redirect_to("/students", { :notice => "Student deleted successfully."} )
   end

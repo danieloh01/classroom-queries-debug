@@ -40,9 +40,11 @@ class DepartmentsController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    @department = Department.where({ :id => the_id }).at(0)
-
-    @department.destroy
+    # @department = Department.where({ :id => the_id }).at(0)
+    matching_records = Department.where({ :id => the_id })
+    the_department = matching_records.at(0)
+    
+    the_department.destroy
 
     redirect_to("/departments", { :notice => "Department deleted successfully."} )
   end
